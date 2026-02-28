@@ -2,24 +2,27 @@
 
 <h2>Table of contents</h2>
 
-- [`SSH` and shells](#ssh-and-shells)
+- [What is `SSH`](#what-is-ssh)
 - [SSH daemon](#ssh-daemon)
 - [`ssh-agent`](#ssh-agent)
 - [Set up SSH](#set-up-ssh)
   - [Create a new `SSH` key](#create-a-new-ssh-key)
   - [Find the `SSH` key files](#find-the-ssh-key-files)
-  - [Add the host to the `SSH` config](#add-the-host-to-the-ssh-config)
   - [Start the `ssh-agent`](#start-the-ssh-agent)
   - [Verify the `SSH` setup](#verify-the-ssh-setup)
+- [Add the host to `SSH`](#add-the-host-to-ssh)
 - [Connect to the VM](#connect-to-the-vm)
+- [Login](#login)
+  - [Login without password](#login-without-password)
+  - [Login with password](#login-with-password)
 - [Common errors](#common-errors)
   - [`Permission denied (publickey)`](#permission-denied-publickey)
   - [`Bad owner or permissions`](#bad-owner-or-permissions)
   - [`Connection timed out`](#connection-timed-out)
 
-## `SSH` and shells
+## What is `SSH`
 
-`Secure Shell` (`SSH`) is a protocol used to securely connect to remote servers.
+`Secure Shell` (`SSH`) is a protocol used to securely connect to remote machines.
 
 You can use it to connect to [your virtual machine](./vm.md#your-vm).
 
@@ -34,14 +37,16 @@ All commands below assume a Unix shell: `Bash` (`Linux`, `WSL`) or `Zsh` (`macOS
 
 ## Set up SSH
 
+Set up [`SSH`](#what-is-ssh) to connect to a [remote host](./computer-networks.md#remote-host).
+
 Steps:
 
 <!-- no toc -->
 1. [Check your current shell](./vs-code.md#check-the-current-shell-in-the-vs-code-terminal).
 2. [Create a new `SSH` key](#create-a-new-ssh-key)
 3. [Find the `SSH` key files](#find-the-ssh-key-files)
-4. [Add the host to the `SSH` config](#add-the-host-to-the-ssh-config)
-5. [Start the `ssh-agent`](#start-the-ssh-agent)
+4. [Start the `ssh-agent`](#start-the-ssh-agent)
+5. [Verify the `SSH` setup](#verify-the-ssh-setup)
 
 ### Create a new `SSH` key
 
@@ -103,25 +108,6 @@ Because you used a custom name, your keys are named `se_toolkit_key` (private) a
 > Never share the private key.
 > This is your secret identity.
 
-### Add the host to the `SSH` config
-
-1. [Open the file](./vs-code.md#open-the-file):
-   `~/.ssh/config`
-
-2. Add this text at the end of the file.
-
-   ```text
-
-   Host se-toolkit-vm
-      HostName <your-vm-ip-address>
-      User root
-      IdentityFile ~/.ssh/se_toolkit_key
-      AddKeysToAgent yes
-      UseKeychain yes
-   ```
-
-3. Replace `<your-vm-ip-address>` with the [IP address of your VM](./vm.md#get-the-ip-address-of-the-vm).
-
 ### Start the `ssh-agent`
 
 1. [Run using the `VS Code Terminal`](./vs-code.md#run-a-command-using-the-vs-code-terminal):
@@ -145,9 +131,42 @@ Because you used a custom name, your keys are named `se_toolkit_key` (private) a
 
 5. If you see `The agent has no identities`, run the [start `ssh-agent` step](#start-the-ssh-agent) again.
 
+## Add the host to `SSH`
+
+1. Make sure you have [set up `SSH`](#set-up-ssh).
+2. Get [`<your-vm-ip-address>`](./vm.md#your-vm-ip-address).
+3. [Open the file](./vs-code.md#open-the-file):
+   `~/.ssh/config`
+4. Add this text at the end of the file.
+
+   - `Linux`, `Windows`:
+
+     ```text
+  
+     Host se-toolkit-vm
+        HostName <your-vm-ip-address>
+        User root
+        IdentityFile ~/.ssh/se_toolkit_key
+        AddKeysToAgent yes
+     ```
+
+   - `macOS`:
+
+     ```text
+  
+     Host se-toolkit-vm
+        HostName <your-vm-ip-address>
+        User root
+        IdentityFile ~/.ssh/se_toolkit_key
+        AddKeysToAgent yes
+        UseKeychain yes
+     ```
+
+5. Replace [`<your-vm-ip-address>`](./vm.md#your-vm-ip-address) in the `~/.ssh/config` file.
+
 ## Connect to the VM
 
-You can connect using the alias that you [added to your `SSH` config](#add-the-host-to-the-ssh-config).
+You can connect using the alias that you [added to your `SSH` config](#add-the-host-to-ssh).
 
 1. [Run using the `VS Code Terminal`](./vs-code.md#run-a-command-using-the-vs-code-terminal):
 
@@ -159,8 +178,20 @@ You can connect using the alias that you [added to your `SSH` config](#add-the-h
    1. You will see a message:
       `The authenticity of host ... can't be established.`
 
-3. Type `yes` and press `Enter`.
-4. After successful login, you should see a shell prompt on the remote machine.
+   2. Type `yes` and press `Enter`.
+3. After a successful login, you should see the [shell prompt](./shell.md#shell-prompt):
+
+   ```terminal
+   root@<your-vm-name>:~#
+   ```
+
+   See [`<your-vm-name>`](./vm.md#your-vm-name).
+
+## Login
+
+### Login without password
+
+### Login with password
 
 ## Common errors
 

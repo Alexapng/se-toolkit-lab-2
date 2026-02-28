@@ -4,13 +4,19 @@
 
 - [What is a VM](#what-is-a-vm)
 - [Your VM](#your-vm)
+- [`<your-vm-name>`](#your-vm-name)
+- [`<your-vm-ip-address>`](#your-vm-ip-address)
+- [Prepare the connection](#prepare-the-connection)
+- [Go to the VMs site](#go-to-the-vms-site)
 - [Create a VM](#create-a-vm)
   - [Create a subscription](#create-a-subscription)
   - [Create a VM using the subscription](#create-a-vm-using-the-subscription)
 - [Go to the VM page](#go-to-the-vm-page)
 - [Get the `IP address` of the VM](#get-the-ip-address-of-the-vm)
 - [Connect to the VM](#connect-to-the-vm)
+- [Delete VM](#delete-vm)
 - [Troubleshooting](#troubleshooting)
+  - [`ping` times out](#ping-times-out)
 
 ## What is a VM
 
@@ -24,6 +30,28 @@ You probably won't have access to the VMs after the course finishes.
 
 See [VM image](./vm-info.md) for the information about your VM.
 
+## `<your-vm-name>`
+
+## `<your-vm-ip-address>`
+
+The [IP address](./networks.md)
+
+## Prepare the connection
+
+1. Disable `VPN`.
+2. Connect your computer to the `Wi-Fi` network `UniversityStudent`.
+3. [Run using the `VS Code Terminal`](./vs-code.md#run-a-command-using-the-vs-code-terminal):
+
+   ```terminal
+   ping <your-vm-ip-address>
+   ```
+
+   See [`<your-vm-ip-address>`](#your-vm-ip-address).
+
+## Go to the VMs site
+
+1. Open the [https://vm.innopolis.university](https://vm.innopolis.university) site in a browser.
+
 ## Create a VM
 
 Complete these steps to create a VM:
@@ -35,22 +63,28 @@ Complete these steps to create a VM:
 
 ### Create a subscription
 
-1. Go to [`https://vm.innopolis.university`](https://vm.innopolis.university/).
+1. [Go to the VMs site](#go-to-the-vms-site).
 2. Click `NEW`.
 3. Click `ADD SUBSCRIPTION`.
 4. Click `Software Engineering Toolkit`.
 5. Click checkmark.
 6. Go to the [`SUBSCRIPTIONS`](https://vm.innopolis.university/#Workspaces/MyAccountExtension/subscriptions) tab.
 7. Look at the `SUBSCRIPTION` column.
-8. You should see there `Software Engineering Toolkit`.
-9. The `Status` of this subscription may be `Syncing` or `Active`.
-10. It can be `Syncing` for a long time.
-11. You'll be able to [create a VM using this subscription](#create-a-vm-using-the-subscription) in approximately 15 minutes.
+
+   You should see there `Software Engineering Toolkit`.
+
+   The `Status` of this subscription can be `Syncing` or `Active`.
+
+   It can be `Syncing` for a long time.
+
+   Nevertheless, you'll be able to [create a VM using this subscription](#create-a-vm-using-the-subscription) in approximately 15 minutes.
+
+   Don't just sit and wait. Complete other steps.
 
 ### Create a VM using the subscription
 
 1. [Create a new `SSH` key](./ssh.md#create-a-new-ssh-key) if not created.
-2. Go to [`https://vm.innopolis.university`](https://vm.innopolis.university/).
+2. [Go to the `vm.innopolis.university` site](#go-to-the-vms-site).
 3. Click `+ NEW`.
 4. Click `STANDALONE VIRTUAL MACHINE`.
 5. Click `FROM GALLERY`.
@@ -75,33 +109,48 @@ Complete these steps to create a VM:
 
 ## Go to the VM page
 
-1. Go to the [`VIRTUALS MACHINES`](https://vm.innopolis.university/#Workspaces/VMExtension/VirtualMachines) tab.
-2. Look at the `NAME`.
-3. Find `<your-vm-name>`.
-4. The `STATUS` should be `Running`.
-5. Click `<your-vm-name>`.
-6. You should be on the VM page.
+<!-- TODO open vm -->
+1. [Go to the VMs site](#go-to-the-vms-site).
+2. Open the `VIRTUALS MACHINES` tab ([https://vm.innopolis.university/#Workspaces/VMExtension/VirtualMachines](https://vm.innopolis.university/#Workspaces/VMExtension/VirtualMachines)).
+3. Look at the `NAME`.
+4. Find `<your-vm-name>`.
+5. The `STATUS` should be `Running`.
+6. Click `<your-vm-name>`.
+7. Click `DASHBOARD`.
+8. You should be on the VM page.
 
 ## Get the `IP address` of the VM
 
-1. Go to the `quick glance` sidebar.
-2. Go to `IP Address(es)`.
-3. You should see there `StudentsCourses01 - 10.93.24.98`.
-4. The `10.93.24.98` string is the `IP address` of the VM in a university network.
-5. We'll refer to this string as `<your-vm-ip-address>`.
+1. [Go to the VM page](#go-to-the-vm-page).
+2. Go to the `quick glance` sidebar (on the right).
+3. Go to `IP Address(es)`.
+4. You should see there `StudentsCourses01 - 10.93.24.98`.
+5. The `10.93.24.98` string is the `IP address` of the VM in a university network.
+6. We'll refer to this string as `<your-vm-ip-address>`.
 
 ## Connect to the VM
 
 1. [Add host to the `SSH` config](./ssh.md#add-the-host-to-the-ssh-config).
-2. Connect your computer to the `Wi-Fi` network `UniversityStudent`.
-3. Open `VS Code`.
-4. [Connect to the VM](./ssh.md#connect-to-the-vm).
-5. After successful connection, you should see:
+2. Disable `VPN`.
+3. Connect your computer to the `Wi-Fi` network `UniversityStudent`.
+4. Open `VS Code`.
+5. [Connect to the VM](./ssh.md#connect-to-the-vm).
+6. If the connection is successful, you should see:
    1. The host fingerprint prompt (first connection only).
    2. A remote shell prompt on the VM (for example, `root@<your-vm-name>:~#`).
-   3. If you use `Remote - SSH` in `VS Code`, the status bar should show that you are connected to a remote host.
+   3. If you use the `ms-vscode-remote.remote-ssh` exntension in `VS Code`, the status bar should show that you are connected to a remote host.
+7. Otherwise, see [troubleshooting](#troubleshooting).
+
+## Delete VM
 
 ## Troubleshooting
+
+### `ping` times out
+
+1. Connect to the Wi `UniversityStudent`
+2. recreate the VM.
+
+   Use the same public key as before.
 
 If you can't connect:
 
